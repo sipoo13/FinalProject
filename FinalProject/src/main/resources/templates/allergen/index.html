@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Allergen</title>
+</head>
+<body>
+<div th:insert="blocks/header"></div>
+
+<form th:action="@{/allergens/search}" th:method="GET">
+    <div class="container mb-3">
+        <label>Поиск</label>
+        <div class="input-group">
+            <input type="text" class="form-control" th:name="name" placeholder="Введите поисковый запрос" aria-label="Поиск" aria-describedby="button-addon2">
+            <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Найти</button>
+        </div>
+    </div>
+</form>
+
+<div th:switch="${allergens}" class="container my-5">
+    <div class="row">
+        <div class="col-md-6">
+            <div th:case="*">
+                <table class="table" border="1">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Название аллергена</th>
+                        <th>Редактировать</th>
+                        <th>Удалить</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="allergen: ${allergens}">
+                        <td class="align-middle" th:text="${allergen.id}"></td>
+                        <td class="align-middle" th:text="${allergen.allergenName}"></td>
+                        <td><a class="btn btn-link" th:href="@{/allergens/edit/{id}(id=${allergen.id})}">Редактировать</a></td>
+                        <td><a class="btn btn-link" th:href="@{/allergens/delete/{id}(id=${allergen.id})}">Удалить</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="mt-5"><a class="btn btn-primary" href="/allergens/new">Добавить аллерген</a></p>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
+</html>
